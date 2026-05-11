@@ -1,0 +1,147 @@
+# Lumière Boutique — Website Project
+
+> A professional, feature-rich boutique fashion website built as a real-world web development project.  
+> **Live Demo:** Open `lumiere-boutique.html` in any browser — no server required.
+
+---
+
+## 🛍️ Project Overview
+
+**Lumière** is a fictional luxury boutique based in Dar es Salaam. This project demonstrates end-to-end front-end web development skills: design system thinking, interactive UI components, and a polished client-ready pitch deliverable.
+
+Built as part of: **Future Interns Full Stack Web Development Internship — Task 2**
+
+---
+
+## ✨ Features
+
+### Design
+- Luxury editorial aesthetic — warm cream, bronze & charcoal palette
+- Custom SVG fashion illustrations (no external images required)
+- `Cormorant Garamond` display font + `DM Sans` body font pairing
+- Animated hero section, scroll marquee, and reveal-on-scroll effects
+
+### Pages / Sections
+| Section | Description |
+|---|---|
+| **Hero** | Full-viewport split layout with animated model illustration |
+| **Collections** | 3-card editorial grid with hover zoom & overlay |
+| **Shop** | 4-product grid with New/Sale badges & wishlist |
+| **About** | Dark quote panel + brand story copy |
+| **Features** | 3-column icon + text strip |
+| **Testimonials** | 3-card review grid |
+| **Newsletter** | Email capture with confirmation |
+| **Footer** | 4-column footer with links, socials, location |
+
+### Interactive Components
+- 🛒 **Shopping Cart Drawer** — slide-in from right, add/remove items, live quantity controls, running subtotal
+- 📅 **Booking Modal** — 3-step appointment flow (service → date/time → contact details → confirmation)
+- 🔔 **Toast Notifications** — "Added to cart" feedback
+- ♥ **Wishlist Buttons** — appear on product hover
+- 📧 **Newsletter Signup** — inline confirmation state
+
+---
+
+## 🗂️ File Structure
+
+```
+lumiere-boutique/
+│
+├── lumiere-boutique.html   # Complete single-file website
+└── README.md               # This file
+```
+
+> The entire project is a **single HTML file** — zero dependencies, zero build tools, opens in any browser instantly.
+
+---
+
+## 🚀 Getting Started
+
+### Option 1 — Open Directly
+```bash
+open lumiere-boutique.html         # macOS
+start lumiere-boutique.html        # Windows
+xdg-open lumiere-boutique.html     # Linux
+```
+
+### Option 2 — Local Dev Server
+```bash
+python3 -m http.server 8080
+# Then visit: http://localhost:8080/lumiere-boutique.html
+```
+
+### Option 3 — Deploy Free
+| Platform | Steps |
+|---|---|
+| **GitHub Pages** | Push to repo → Settings → Pages → Deploy from branch |
+| **Netlify** | Drag & drop the HTML file at netlify.com/drop |
+| **Vercel** | `npx vercel` in the project folder |
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Usage |
+|---|---|
+| HTML5 | Semantic structure |
+| CSS3 | Custom properties, Grid, Flexbox, animations |
+| Vanilla JavaScript | Cart state, modal logic, scroll observer |
+| Google Fonts | Cormorant Garamond + DM Sans |
+| SVG | All illustrations and icons (inline, no CDN) |
+
+**No frameworks. No dependencies. No build step.**
+
+---
+
+## 📐 Design Decisions
+
+**Why a single file?**  
+For a pitch/demo scenario, portability matters. One file = instant share, no broken asset paths, works offline.
+
+**Why vanilla JS over React/Vue?**  
+The interactivity required (cart drawer, modal, scroll animations) is achievable with ~150 lines of clean JS. Adding a framework would introduce build complexity for no user benefit in this scope.
+
+**Why SVG illustrations over photos?**  
+Eliminates licensing concerns, loads instantly, scales perfectly at any resolution, and maintains visual cohesion across the entire design.
+
+---
+
+## 🎤 Pitch Explanation
+
+> *"Lumière's website solves the #1 problem for boutique fashion businesses: converting curious visitors into loyal customers. The hero section communicates brand identity instantly. The collections grid guides discovery. The personal styling booking flow captures high-intent leads before they leave. The cart drawer reduces friction to purchase. The newsletter builds a direct, owned marketing channel — not dependent on social algorithms.*
+>
+> *Every design decision — the warm palette, editorial typography, illustrated model — mirrors the in-store luxury experience, building trust before the customer ever walks through the door. This isn't a brochure site. It's a growth tool."*
+
+---
+
+## 📈 Business Value Delivered
+
+| Problem | Solution Built |
+|---|---|
+| No online presence | Full website with brand identity |
+| No appointment system | 3-step booking modal with stylist selection |
+| No e-commerce capability | Functional cart with quantity management |
+| No customer list | Newsletter capture with confirmation |
+| No social proof | Testimonials section |
+
+---
+
+## 🔮 Future Enhancements
+
+- [ ] Connect booking form to Google Calendar API or Calendly embed  
+- [ ] Integrate Stripe or Paystack for real checkout  
+- [ ] Add product filtering by category/color/size  
+- [ ] Build a CMS backend (Sanity, Contentful) for owner to manage products  
+- [ ] Add WhatsApp chat widget for local customer support  
+- [ ] Implement PWA manifest for mobile installability  
+
+---
+
+## 📄 License
+
+This project was created for educational purposes as part of a web development internship task.  
+Free to use, modify, and pitch to real businesses.
+
+---
+
+*Built with intention. Worn with pride.* ✨

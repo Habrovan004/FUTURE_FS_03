@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lumière — Boutique Fashion</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FDF9F4;
+    --sand: #E8DFD0;
+    --bronze: #9C7A5B;
+    --dark-bronze: #6B5040;
+    --charcoal: #2A2520;
+    --soft-black: #1A1612;
+    --accent-rose: #C4906E;
+    --text-muted: #8A7968;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'DM Sans', sans-serif;
+    --nav-h: 72px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--charcoal);
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
+    min-width: 320px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    background: rgba(253,249,244,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(156,122,91,0.15);
+    animation: fadeDown 0.8s ease both;
+  }
+  .nav-logo {
+    font-family: var(--font-display); font-size: 26px; font-weight: 300;
+    letter-spacing: 0.18em; color: var(--soft-black); text-decoration: none; text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-body); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--charcoal);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--bronze); }
+  .nav-cta {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 10px 24px; border: 1px solid var(--bronze); color: var(--bronze);
+    background: transparent; cursor: pointer; transition: all 0.3s; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--bronze); color: white; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; padding-top: var(--nav-h);
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 5vw 80px 8vw;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 400; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--bronze); margin-bottom: 24px;
+  }
+  .hero-h1 {
+    font-family: var(--font-display); font-size: clamp(52px, 6vw, 88px);
+    font-weight: 300; line-height: 1.05; color: var(--soft-black); margin-bottom: 28px;
+  }
+  .hero-h1 em { font-style: italic; color: var(--bronze); }
+  .hero-sub {
+    font-size: 15px; font-weight: 300; color: var(--text-muted);
+    line-height: 1.75; max-width: 380px; margin-bottom: 44px;
+  }
+  .hero-buttons { display: flex; gap: 16px; align-items: center; }
+  .btn-primary {
+    padding: 14px 36px; background: var(--charcoal); color: white;
+    font-size: 12px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
+    border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.3s;
+  }
+  .btn-primary:hover { background: var(--bronze); }
+  .btn-ghost {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); text-decoration: underline; text-underline-offset: 4px;
+    cursor: pointer; background: none; border: none; transition: color 0.3s;
+  }
+  .btn-ghost:hover { color: var(--bronze); }
+
+  /* HAMBURGER */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--charcoal); transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .mobile-nav {
+    display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 99;
+    background: var(--warm-white); border-bottom: 1px solid var(--sand);
+    flex-direction: column; padding: 20px 5vw 28px; gap: 0;
+    transform: translateY(-8px); opacity: 0; pointer-events: none; transition: all 0.3s;
+  }
+  .mobile-nav.open { transform: none; opacity: 1; pointer-events: all; }
+  .mobile-nav a {
+    font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--charcoal); text-decoration: none; padding: 14px 0;
+    border-bottom: 1px solid var(--sand); transition: color 0.2s;
+  }
+  .mobile-nav a:hover { color: var(--bronze); }
+  .mobile-nav a:last-child { border-bottom: none; }
+
+  .hero-right {
+    position: relative; background: var(--sand); overflow: hidden;
+    animation: fadeIn 1.2s 0.2s ease both;
+  }
+  .hero-img-block {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  }
+  .hero-fashion-art { width: 75%; max-width: 380px; }
+  .hero-tag {
+    position: absolute; bottom: 48px; left: 20px;
+    background: white; padding: 16px 24px;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.1);
+    animation: slideRight 1s 0.8s ease both;
+  }
+  .hero-tag-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
+  .hero-tag-value { font-family: var(--font-display); font-size: 22px; color: var(--soft-black); margin-top: 4px; }
+  .hero-badge {
+    position: absolute; top: 48px; right: 32px;
+    width: 90px; height: 90px; border-radius: 50%; background: var(--bronze);
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    animation: spin-slow 20s linear infinite;
+  }
+  .hero-badge span { font-size: 9px; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: white; text-align: center; line-height: 1.8; }
+
+  /* MARQUEE */
+  .marquee-bar { background: var(--charcoal); padding: 14px 0; overflow: hidden; white-space: nowrap; }
+  .marquee-track { display: inline-block; animation: marquee 28s linear infinite; }
+  .marquee-item { display: inline-block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sand); padding: 0 48px; }
+  .marquee-dot { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--bronze); vertical-align: middle; margin-right: 48px; }
+
+  /* SECTION HEADER */
+  .section-header { text-align: center; padding: 90px 5vw 48px; }
+  .section-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bronze); margin-bottom: 16px; }
+  .section-h2 { font-family: var(--font-display); font-size: clamp(36px, 4vw, 56px); font-weight: 300; color: var(--soft-black); line-height: 1.15; }
+  .section-h2 em { font-style: italic; color: var(--bronze); }
+
+  /* COLLECTIONS */
+  .collections { padding: 0 5vw 90px; }
+  .collections-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 20px; }
+  .collection-card { position: relative; overflow: hidden; cursor: pointer; }
+  .collection-card:hover .card-overlay { opacity: 1; }
+  .collection-card:hover .card-img { transform: scale(1.04); }
+  .card-img {
+    width: 100%; aspect-ratio: 2/3;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.6s ease; overflow: hidden;
+  }
+  .collection-card:first-child .card-img { aspect-ratio: 3/4; }
+  .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,22,18,0.85) 0%, transparent 55%);
+    opacity: 0.6; transition: opacity 0.4s;
+  }
+  .card-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; }
+  .card-cat { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 6px; }
+  .card-name { font-family: var(--font-display); font-size: 22px; font-weight: 300; color: white; line-height: 1.2; }
+  .card-link { display: inline-block; margin-top: 12px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-rose); text-decoration: none; border-bottom: 1px solid var(--accent-rose); padding-bottom: 2px; }
+
+  /* PRODUCTS */
+  .products { background: var(--cream); padding: 0 5vw 90px; }
+  .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .product-card { position: relative; cursor: pointer; }
+  .product-img {
+    width: 100%; aspect-ratio: 3/4; background: var(--sand);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; margin-bottom: 16px; position: relative;
+  }
+  .product-img:hover svg { transform: scale(1.05); }
+  .product-img svg { transition: transform 0.5s ease; }
+  .product-badge-new { position: absolute; top: 14px; left: 14px; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; background: var(--charcoal); color: white; padding: 4px 10px; }
+  .product-badge-sale { position: absolute; top: 14px; left: 14px; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; background: var(--bronze); color: white; padding: 4px 10px; }
+  .product-name { font-family: var(--font-display); font-size: 17px; font-weight: 400; color: var(--soft-black); margin-bottom: 4px; }
+  .product-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+  .product-price { font-size: 14px; font-weight: 400; color: var(--charcoal); display: flex; gap: 10px; align-items: center; }
+  .price-old { text-decoration: line-through; color: var(--text-muted); }
+  .price-new { color: var(--bronze); }
+  .product-wishlist {
+    position: absolute; top: 14px; right: 14px;
+    width: 32px; height: 32px; border-radius: 50%; background: white;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.2s; opacity: 0;
+  }
+  .product-img:hover .product-wishlist { opacity: 1; }
+  .product-wishlist:hover { background: var(--bronze); }
+  .product-wishlist:hover svg path { fill: white; stroke: white; }
+
+  /* ABOUT */
+  .about-strip { display: grid; grid-template-columns: 1fr 1fr; min-height: 520px; }
+  .about-visual {
+    background: var(--charcoal);
+    display: flex; align-items: center; justify-content: center;
+    padding: 60px; position: relative; overflow: hidden;
+  }
+  .about-visual::before { content: ''; position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; border-radius: 50%; border: 1px solid rgba(156,122,91,0.3); }
+  .about-visual::after { content: ''; position: absolute; bottom: -60px; left: -20px; width: 280px; height: 280px; border-radius: 50%; border: 1px solid rgba(156,122,91,0.15); }
+  .about-quote { font-family: var(--font-display); font-size: clamp(28px, 3vw, 44px); font-weight: 300; font-style: italic; color: white; line-height: 1.35; position: relative; z-index: 1; }
+  .about-quote span { color: var(--accent-rose); }
+  .about-text { background: var(--warm-white); display: flex; flex-direction: column; justify-content: center; padding: 60px 8vw 60px 6vw; }
+  .about-text .section-eyebrow { text-align: left; }
+  .about-text h2 { font-family: var(--font-display); font-size: clamp(30px, 3vw, 44px); font-weight: 300; color: var(--soft-black); line-height: 1.2; margin-bottom: 20px; }
+  .about-text p { font-size: 15px; color: var(--text-muted); line-height: 1.8; margin-bottom: 32px; }
+
+  /* FEATURES */
+  .features { background: var(--cream); padding: 90px 5vw; }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 56px; }
+  .feature-item { text-align: center; }
+  .feature-icon { width: 56px; height: 56px; border: 1px solid var(--sand); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; background: white; }
+  .feature-name { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--soft-black); margin-bottom: 10px; }
+  .feature-desc { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 90px 5vw; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+  .testimonial-card { border: 1px solid var(--sand); padding: 36px 32px; background: white; position: relative; }
+  .testi-stars { color: var(--bronze); font-size: 13px; margin-bottom: 18px; letter-spacing: 3px; }
+  .testi-text { font-family: var(--font-display); font-size: 17px; font-style: italic; color: var(--charcoal); line-height: 1.6; margin-bottom: 24px; }
+  .testi-author { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+
+  /* NEWSLETTER */
+  .newsletter { background: var(--charcoal); padding: 90px 5vw; text-align: center; }
+  .newsletter h2 { font-family: var(--font-display); font-size: clamp(36px, 4vw, 56px); font-weight: 300; color: white; line-height: 1.15; margin-bottom: 14px; }
+  .newsletter h2 em { font-style: italic; color: var(--accent-rose); }
+  .newsletter p { font-size: 15px; color: rgba(255,255,255,0.55); margin-bottom: 40px; }
+  .email-form { display: flex; gap: 0; max-width: 480px; margin: 0 auto; }
+  .email-form input { flex: 1; padding: 14px 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-right: none; color: white; font-family: var(--font-body); font-size: 14px; outline: none; }
+  .email-form input::placeholder { color: rgba(255,255,255,0.35); }
+  .email-form button { padding: 14px 28px; background: var(--bronze); color: white; border: none; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; font-weight: 400; transition: background 0.3s; }
+  .email-form button:hover { background: var(--accent-rose); }
+
+  /* FOOTER */
+  footer { background: var(--soft-black); padding: 64px 5vw 32px; }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+  .footer-brand-name { font-family: var(--font-display); font-size: 28px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; color: white; margin-bottom: 16px; }
+  .footer-brand-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.8; margin-bottom: 28px; }
+  .footer-socials { display: flex; gap: 12px; }
+  .social-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.3s; background: none; }
+  .social-btn:hover { border-color: var(--bronze); }
+  .footer-col h4 { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bronze); margin-bottom: 20px; font-weight: 400; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.3s; }
+  .footer-col a:hover { color: white; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+  .footer-legal { display: flex; gap: 24px; }
+  .footer-legal a { font-size: 12px; color: rgba(255,255,255,0.25); text-decoration: none; transition: color 0.3s; }
+  .footer-legal a:hover { color: rgba(255,255,255,0.6); }
+
+  /* ANIMATIONS */
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: none; } }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  /* ✅ SCROLL REVEAL — fixed: added .reveal.visible rule */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .mobile-nav { display: flex; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { min-height: 420px; }
+    .hero-left { padding: 60px 6vw 48px; }
+    .collections-grid { grid-template-columns: 1fr 1fr; }
+    .collection-card:first-child { grid-column: 1 / -1; }
+    .collection-card:first-child .card-img { aspect-ratio: 16/9; }
+    .products-grid { grid-template-columns: 1fr 1fr; }
+    .about-strip { grid-template-columns: 1fr; }
+    .about-visual { padding: 48px 6vw; min-height: 280px; }
+    .features-grid { grid-template-columns: 1fr; gap: 28px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    .footer-legal { flex-wrap: wrap; justify-content: center; }
+  }
+  @media (max-width: 560px) {
+    .hero-left { padding: 48px 5vw 36px; }
+    .hero-buttons { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .hero-right { min-height: 340px; }
+    .hero-badge { width: 70px; height: 70px; top: 20px; right: 16px; }
+    .hero-badge span { font-size: 7px; }
+    .collections-grid { grid-template-columns: 1fr; }
+    .collection-card:first-child { grid-column: auto; }
+    .collection-card:first-child .card-img { aspect-ratio: 2/3; }
+    .products-grid { grid-template-columns: 1fr; }
+    .email-form { flex-direction: column; }
+    .email-form input { border-right: 1px solid rgba(255,255,255,0.15); border-bottom: none; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+
+  /* NAV ICON BUTTONS */
+  .nav-icon-btn { background: none; border: none; cursor: pointer; color: var(--charcoal); padding: 6px; position: relative; transition: color 0.2s; display: flex; align-items: center; }
+  .nav-icon-btn:hover { color: var(--bronze); }
+  .cart-count { position: absolute; top: -2px; right: -4px; width: 16px; height: 16px; border-radius: 50%; background: var(--bronze); color: white; font-size: 9px; font-weight: 500; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0); transition: all 0.2s; }
+  .cart-count.visible { opacity: 1; transform: scale(1); }
+
+  /* OVERLAY */
+  .overlay { position: fixed; inset: 0; z-index: 200; background: rgba(26,22,18,0.55); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.35s; }
+  .overlay.active { opacity: 1; pointer-events: all; }
+
+  /* CART DRAWER */
+  .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 300; width: min(420px, 100vw); background: var(--warm-white); display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); box-shadow: -12px 0 48px rgba(0,0,0,0.12); }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-header { display: flex; align-items: center; justify-content: space-between; padding: 24px 28px; border-bottom: 1px solid var(--sand); }
+  .cart-title { font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--soft-black); }
+  .close-btn { background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; transition: color 0.2s; }
+  .close-btn:hover { color: var(--charcoal); }
+  .cart-items { flex: 1; overflow-y: auto; padding: 20px 28px; }
+  .cart-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 12px; color: var(--text-muted); }
+  .cart-empty svg { opacity: 0.3; }
+  .cart-empty p { font-size: 14px; }
+  .cart-item { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--sand); animation: fadeUp 0.3s ease both; }
+  .cart-item-thumb { width: 76px; height: 96px; background: var(--sand); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-family: var(--font-display); font-size: 16px; color: var(--soft-black); margin-bottom: 4px; }
+  .cart-item-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+  .cart-item-row { display: flex; align-items: center; justify-content: space-between; }
+  .qty-control { display: flex; align-items: center; gap: 10px; }
+  .qty-btn { width: 26px; height: 26px; border: 1px solid var(--sand); background: white; cursor: pointer; font-size: 14px; color: var(--charcoal); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+  .qty-btn:hover { border-color: var(--bronze); color: var(--bronze); }
+  .qty-num { font-size: 13px; font-weight: 500; min-width: 16px; text-align: center; }
+  .cart-item-price { font-size: 14px; font-weight: 500; color: var(--charcoal); }
+  .remove-btn { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 8px; padding: 0; text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; }
+  .remove-btn:hover { color: var(--bronze); }
+  .cart-footer { padding: 20px 28px 28px; border-top: 1px solid var(--sand); background: white; }
+  .cart-subtotal { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .cart-subtotal span { font-size: 13px; color: var(--text-muted); }
+  .cart-subtotal strong { font-size: 18px; font-weight: 500; font-family: var(--font-display); color: var(--soft-black); }
+  .cart-note { font-size: 11px; color: var(--text-muted); margin-bottom: 18px; }
+  .btn-checkout { width: 100%; padding: 15px; background: var(--charcoal); color: white; border: none; cursor: pointer; font-family: var(--font-body); font-size: 12px; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; transition: background 0.3s; margin-bottom: 10px; }
+  .btn-checkout:hover { background: var(--bronze); }
+  .btn-continue { width: 100%; padding: 12px; background: none; border: 1px solid var(--sand); cursor: pointer; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); transition: all 0.2s; }
+  .btn-continue:hover { border-color: var(--bronze); color: var(--bronze); }
+
+  /* BOOKING MODAL */
+  .booking-modal { position: fixed; inset: 0; z-index: 400; display: flex; align-items: center; justify-content: center; padding: 20px; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+  .booking-modal.open { opacity: 1; pointer-events: all; }
+  .booking-card { background: white; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; transform: translateY(24px) scale(0.97); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); position: relative; }
+  .booking-modal.open .booking-card { transform: none; }
+  .booking-top { background: var(--charcoal); padding: 36px 36px 28px; position: relative; }
+  .booking-top .close-btn { position: absolute; top: 18px; right: 18px; color: rgba(255,255,255,0.5); }
+  .booking-top .close-btn:hover { color: white; }
+  .booking-eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bronze); margin-bottom: 10px; }
+  .booking-top h2 { font-family: var(--font-display); font-size: 30px; font-weight: 300; color: white; line-height: 1.2; }
+  .booking-top h2 em { font-style: italic; color: var(--accent-rose); }
+  .booking-top p { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 8px; }
+  .booking-body { padding: 32px 36px 36px; }
+  .booking-step { display: none; }
+  .booking-step.active { display: block; }
+  .step-indicator { display: flex; gap: 8px; margin-bottom: 28px; }
+  .step-dot { flex: 1; height: 2px; background: var(--sand); transition: background 0.3s; }
+  .step-dot.done { background: var(--bronze); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 11px 14px; border: 1px solid var(--sand); background: var(--cream); font-family: var(--font-body); font-size: 14px; color: var(--charcoal); outline: none; transition: border-color 0.2s; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--bronze); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .service-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .service-card { border: 1px solid var(--sand); padding: 16px; cursor: pointer; transition: all 0.2s; background: var(--cream); text-align: center; }
+  .service-card:hover { border-color: var(--bronze); }
+  .service-card.selected { border-color: var(--bronze); background: white; }
+  .service-icon { font-size: 22px; margin-bottom: 8px; }
+  .service-name { font-family: var(--font-display); font-size: 16px; color: var(--soft-black); }
+  .service-price { font-size: 11px; color: var(--bronze); margin-top: 4px; }
+  .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  .time-slot { padding: 10px 6px; border: 1px solid var(--sand); background: var(--cream); text-align: center; font-size: 13px; cursor: pointer; transition: all 0.2s; color: var(--charcoal); }
+  .time-slot:hover { border-color: var(--bronze); }
+  .time-slot.selected { border-color: var(--bronze); background: var(--bronze); color: white; }
+  .time-slot.unavailable { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+  .booking-nav { display: flex; gap: 12px; margin-top: 24px; }
+  .btn-next, .btn-back { padding: 13px 28px; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; }
+  .btn-next { background: var(--charcoal); color: white; border: none; flex: 1; transition: background 0.3s; }
+  .btn-next:hover { background: var(--bronze); }
+  .btn-back { background: none; border: 1px solid var(--sand); color: var(--text-muted); transition: all 0.2s; }
+  .btn-back:hover { border-color: var(--bronze); color: var(--bronze); }
+  .booking-confirm { text-align: center; padding: 12px 0; }
+  .confirm-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--cream); border: 1px solid var(--bronze); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+  .booking-confirm h3 { font-family: var(--font-display); font-size: 26px; font-weight: 400; color: var(--soft-black); margin-bottom: 10px; }
+  .booking-confirm p { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+  .confirm-summary { background: var(--cream); border: 1px solid var(--sand); padding: 18px; margin: 20px 0; text-align: left; }
+  .confirm-row { display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px solid var(--sand); }
+  .confirm-row:last-child { border-bottom: none; }
+  .confirm-row span:first-child { color: var(--text-muted); }
+  .confirm-row span:last-child { font-weight: 500; color: var(--charcoal); }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--charcoal); color: white; padding: 12px 24px; font-size: 13px; letter-spacing: 0.05em; z-index: 500; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); white-space: nowrap; pointer-events: none; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Lumière</a>
+  <ul class="nav-links">
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="nav-icon-btn" onclick="openBooking()" title="Book a Styling Session">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+    </button>
+    <button class="nav-icon-btn cart-toggle" onclick="openCart()" title="Shopping Cart">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <a class="nav-cta" href="#shop">Shop Now</a>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#collections" onclick="closeMobileNav()">Collections</a>
+  <a href="#shop" onclick="closeMobileNav()">Shop</a>
+  <a href="#about" onclick="closeMobileNav()">Our Story</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+  <a href="#" onclick="closeMobileNav();openBooking();" style="color:var(--bronze);">Book a Styling Session</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">New Arrivals — Spring 2025</p>
+    <h1 class="hero-h1">Wear<br/>the <em>Light</em><br/>You Are</h1>
+    <p class="hero-sub">Curated fashion for the woman who moves through the world with intention. Each piece is selected for quality, elegance, and timeless appeal.</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#collections">Explore Collections</a>
+      <button class="btn-ghost" onclick="openBooking()">Book a Styling Session</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-block">
+      <svg class="hero-fashion-art" viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="160" cy="240" rx="120" ry="160" fill="#D5C9B8" opacity="0.4"/>
+        <g opacity="0.85">
+          <ellipse cx="160" cy="82" rx="28" ry="30" fill="#C8A882"/>
+          <rect x="153" y="108" width="14" height="18" rx="7" fill="#C8A882"/>
+          <ellipse cx="160" cy="66" rx="30" ry="22" fill="#5C3D2E"/>
+          <path d="M130 68 Q125 100 130 130" stroke="#5C3D2E" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <path d="M190 68 Q195 90 188 120" stroke="#5C3D2E" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M136 124 Q120 130 108 150 L100 200 L220 200 L212 150 Q200 130 184 124 Z" fill="#9C7A5B"/>
+          <path d="M100 200 Q95 280 90 360 L230 360 Q225 280 220 200 Z" fill="#8A6A4A"/>
+          <line x1="130" y1="210" x2="125" y2="355" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <line x1="160" y1="208" x2="160" y2="358" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <line x1="190" y1="210" x2="195" y2="355" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <rect x="100" y="196" width="120" height="10" rx="5" fill="#6B5040"/>
+          <path d="M144 128 Q160 145 176 128" stroke="#D4A96A" stroke-width="2" fill="none"/>
+          <circle cx="160" cy="146" r="4" fill="#D4A96A"/>
+          <path d="M108 150 Q88 175 82 215" stroke="#C8A882" stroke-width="18" fill="none" stroke-linecap="round"/>
+          <path d="M212 150 Q235 175 240 210" stroke="#C8A882" stroke-width="18" fill="none" stroke-linecap="round"/>
+          <ellipse cx="82" cy="220" rx="12" ry="10" fill="#C8A882"/>
+          <rect x="58" y="222" width="38" height="30" rx="6" fill="#5C3D2E"/>
+          <path d="M66 222 Q68 210 80 210 Q92 210 94 222" stroke="#5C3D2E" stroke-width="3" fill="none"/>
+          <ellipse cx="125" cy="368" rx="22" ry="14" fill="#5C3D2E"/>
+          <ellipse cx="195" cy="368" rx="22" ry="14" fill="#5C3D2E"/>
+          <rect x="116" y="355" width="12" height="18" rx="3" fill="#6B5040"/>
+          <rect x="186" y="355" width="12" height="18" rx="3" fill="#6B5040"/>
+          <rect x="120" y="370" width="4" height="10" rx="2" fill="#4A2E20"/>
+          <rect x="190" y="370" width="4" height="10" rx="2" fill="#4A2E20"/>
+        </g>
+        <circle cx="60" cy="120" r="3" fill="#9C7A5B" opacity="0.5"/>
+        <circle cx="270" cy="180" r="5" fill="#9C7A5B" opacity="0.3"/>
+        <circle cx="50" cy="300" r="4" fill="#C4906E" opacity="0.4"/>
+        <circle cx="280" cy="320" r="3" fill="#C4906E" opacity="0.4"/>
+        <line x1="40" y1="160" x2="65" y2="160" stroke="#9C7A5B" stroke-width="1" opacity="0.4"/>
+        <line x1="255" y1="250" x2="280" y2="250" stroke="#9C7A5B" stroke-width="1" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="hero-tag">
+      <div class="hero-tag-label">Featured Piece</div>
+      <div class="hero-tag-value">Amber Maxi Dress</div>
+    </div>
+    <div class="hero-badge"><span>New<br/>Season<br/>2025</span></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-track">
+    <span class="marquee-item">Free Shipping Over $150</span><span class="marquee-dot"></span>
+    <span class="marquee-item">New Spring Collection</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Sustainable Fabrics</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Personal Styling Available</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Free Returns & Exchanges</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Free Shipping Over $150</span><span class="marquee-dot"></span>
+    <span class="marquee-item">New Spring Collection</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Sustainable Fabrics</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Personal Styling Available</span><span class="marquee-dot"></span>
+    <span class="marquee-item">Free Returns & Exchanges</span><span class="marquee-dot"></span>
+  </div>
+</div>
+
+<!-- COLLECTIONS -->
+<section id="collections">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">Curated for You</p>
+    <h2 class="section-h2">Our <em>Collections</em></h2>
+  </div>
+  <div class="collections">
+    <div class="collections-grid reveal">
+      <div class="collection-card">
+        <div class="card-img" style="background: linear-gradient(135deg, #D5C0A6 0%, #B09070 100%);">
+          <svg viewBox="0 0 200 280" width="130" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="100" cy="55" rx="22" ry="24" fill="#C8A882"/>
+            <rect x="94" y="77" width="12" height="14" rx="6" fill="#C8A882"/>
+            <ellipse cx="100" cy="42" rx="24" ry="18" fill="#5C3D2E"/>
+            <path d="M78 90 Q65 100 58 125 L52 185 L148 185 L142 125 Q135 100 122 90 Z" fill="white" opacity="0.9"/>
+            <path d="M52 185 L45 270 L155 270 L148 185 Z" fill="white" opacity="0.85"/>
+            <line x1="100" y1="192" x2="100" y2="268" stroke="rgba(156,122,91,0.4)" stroke-width="1.5"/>
+            <path d="M86 108 Q100 120 114 108" stroke="#9C7A5B" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="card-overlay"></div>
+        <div class="card-info">
+          <p class="card-cat">Editorial</p>
+          <p class="card-name">The White Story</p>
+          <a class="card-link" href="#">Discover →</a>
+        </div>
+      </div>
+      <div class="collection-card">
+        <div class="card-img" style="background: linear-gradient(160deg, #2A2520 0%, #6B5040 100%);">
+          <svg viewBox="0 0 180 250" width="110" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="90" cy="48" rx="20" ry="22" fill="#D4A882"/>
+            <rect x="84" y="68" width="12" height="14" rx="6" fill="#D4A882"/>
+            <ellipse cx="90" cy="36" rx="22" ry="16" fill="#1A0F0A"/>
+            <path d="M70 80 Q58 92 52 115 L48 175 L132 175 L128 115 Q122 92 110 80 Z" fill="#8A6A4A"/>
+            <rect x="50" y="170" width="80" height="6" rx="3" fill="#6B5040"/>
+            <path d="M48 175 L42 248 L138 248 L132 175 Z" fill="#9C7A5B"/>
+          </svg>
+        </div>
+        <div class="card-overlay"></div>
+        <div class="card-info">
+          <p class="card-cat">Evening</p>
+          <p class="card-name">After Midnight</p>
+          <a class="card-link" href="#">Discover →</a>
+        </div>
+      </div>
+      <div class="collection-card">
+        <div class="card-img" style="background: linear-gradient(150deg, #E8DFD0 0%, #C4906E 100%);">
+          <svg viewBox="0 0 180 250" width="110" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="90" cy="48" rx="20" ry="22" fill="#C09070"/>
+            <rect x="84" y="68" width="12" height="14" rx="6" fill="#C09070"/>
+            <ellipse cx="90" cy="36" rx="22" ry="16" fill="#4A2E20"/>
+            <path d="M70 80 Q58 90 55 110 L50 165 L130 165 L125 110 Q122 90 110 80 Z" fill="#D4905A" opacity="0.9"/>
+            <path d="M52 162 Q48 200 44 248 L136 248 Q132 200 128 162 Z" fill="#C4906E"/>
+            <rect x="52" y="158" width="76" height="8" rx="4" fill="#9A6040"/>
+            <circle cx="90" cy="100" r="6" fill="#FAD080"/>
+          </svg>
+        </div>
+        <div class="card-overlay"></div>
+        <div class="card-info">
+          <p class="card-cat">Resort</p>
+          <p class="card-name">Sun-Kissed</p>
+          <a class="card-link" href="#">Discover →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="shop" class="products">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">Featured Pieces</p>
+    <h2 class="section-h2">Shop the <em>Edit</em></h2>
+  </div>
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-img" style="background: #E8DFD0;">
+        <span class="product-badge-new">New</span>
+        <button class="product-wishlist"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#9C7A5B" stroke-width="1.5"/></svg></button>
+        <svg viewBox="0 0 140 200" width="100" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="70" cy="35" rx="18" ry="20" fill="#C8A882"/>
+          <ellipse cx="70" cy="24" rx="20" ry="14" fill="#3D2416"/>
+          <rect x="64" y="53" width="12" height="12" rx="6" fill="#C8A882"/>
+          <path d="M52 64 Q42 75 38 98 L35 155 L105 155 L102 98 Q98 75 88 64 Z" fill="#9C7A5B"/>
+          <path d="M35 155 L30 198 L110 198 L105 155 Z" fill="#8A6A4A"/>
+          <rect x="36" y="150" width="68" height="7" rx="3" fill="#7A5A3A"/>
+        </svg>
+      </div>
+      <p class="product-name">Camel Wrap Coat</p>
+      <p class="product-sub">Premium Wool Blend</p>
+      <p class="product-price">$285</p>
+    </div>
+    <div class="product-card">
+      <div class="product-img" style="background: #2A2520;">
+        <span class="product-badge-sale">Sale</span>
+        <button class="product-wishlist"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#9C7A5B" stroke-width="1.5"/></svg></button>
+        <svg viewBox="0 0 140 200" width="100" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="70" cy="35" rx="18" ry="20" fill="#D4B090"/>
+          <ellipse cx="70" cy="24" rx="20" ry="14" fill="#1A0A05"/>
+          <rect x="64" y="53" width="12" height="12" rx="6" fill="#D4B090"/>
+          <path d="M52 64 Q45 72 42 90 L38 135 L102 135 L98 90 Q95 72 88 64 Z" fill="white" opacity="0.9"/>
+          <path d="M40 135 L36 198 L104 198 L100 135 Z" fill="#1A1A1A"/>
+        </svg>
+      </div>
+      <p class="product-name">Monochrome Set</p>
+      <p class="product-sub">Silk & Satin</p>
+      <p class="product-price"><span class="price-old">$195</span><span class="price-new">$139</span></p>
+    </div>
+    <div class="product-card">
+      <div class="product-img" style="background: #F0E8DC;">
+        <button class="product-wishlist"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#9C7A5B" stroke-width="1.5"/></svg></button>
+        <svg viewBox="0 0 140 200" width="100" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="70" cy="35" rx="18" ry="20" fill="#C8A882"/>
+          <ellipse cx="70" cy="24" rx="20" ry="14" fill="#6B3020"/>
+          <rect x="64" y="53" width="12" height="12" rx="6" fill="#C8A882"/>
+          <path d="M52 64 Q42 78 38 110 L35 198 L105 198 L102 110 Q98 78 88 64 Z" fill="#C4906E"/>
+          <circle cx="70" cy="80" r="5" fill="#FAD080"/>
+        </svg>
+      </div>
+      <p class="product-name">Sienna Maxi Dress</p>
+      <p class="product-sub">Linen Collection</p>
+      <p class="product-price">$168</p>
+    </div>
+    <div class="product-card">
+      <div class="product-img" style="background: #D5C0A6;">
+        <span class="product-badge-new">New</span>
+        <button class="product-wishlist"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#9C7A5B" stroke-width="1.5"/></svg></button>
+        <svg viewBox="0 0 160 160" width="120" xmlns="http://www.w3.org/2000/svg">
+          <path d="M45 65 Q48 45 80 45 Q112 45 115 65" stroke="#5C3D2E" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <rect x="28" y="65" width="104" height="82" rx="12" fill="#5C3D2E"/>
+          <rect x="32" y="69" width="96" height="74" rx="10" fill="#6B4A35"/>
+          <rect x="55" y="95" width="50" height="30" rx="8" fill="#5C3D2E"/>
+          <circle cx="80" cy="110" r="5" fill="#D4A96A"/>
+        </svg>
+      </div>
+      <p class="product-name">Chestnut Leather Tote</p>
+      <p class="product-sub">Full Grain Leather</p>
+      <p class="product-price">$320</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-strip">
+  <div class="about-visual">
+    <p class="about-quote">"Fashion is not something that exists in dresses only. Fashion is in the <span>sky, the street</span>, fashion has to do with ideas."</p>
+  </div>
+  <div class="about-text reveal">
+    <p class="section-eyebrow">Our Story</p>
+    <h2>Crafted with Purpose,<br/>Worn with Pride</h2>
+    <p>Lumière was founded in 2019 with a singular mission: to bring effortlessly elegant fashion to women who value both quality and conscience. Every piece is curated from sustainable ateliers in Europe and East Africa.</p>
+    <p>We believe that when you feel beautiful in what you wear, you move differently — and that movement changes the world around you.</p>
+    <a class="btn-primary" href="#">Our Full Story</a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features reveal">
+  <div class="section-header" style="padding-top: 0;">
+    <p class="section-eyebrow">Why Lumière</p>
+    <h2 class="section-h2">The <em>Difference</em> is in the Details</h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-item">
+      <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9C7A5B" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <p class="feature-name">Ethically Sourced</p>
+      <p class="feature-desc">Every piece traceable to responsible makers who earn fair wages and work in safe conditions.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9C7A5B" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+      <p class="feature-name">Personal Styling</p>
+      <p class="feature-desc">Book a one-on-one with our in-house stylists — in-store or virtually, at no extra cost.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9C7A5B" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <p class="feature-name">Local & Global</p>
+      <p class="feature-desc">Walk into our Dar es Salaam showroom or shop from anywhere — we ship worldwide.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials reveal">
+  <div class="section-header">
+    <p class="section-eyebrow">Client Love</p>
+    <h2 class="section-h2">Worn & <em>Adored</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"I wore the Sienna Maxi to my sister's wedding and I've never felt so effortlessly put-together. The fabric drapes like a dream."</p>
+      <p class="testi-author">— Amina T., Nairobi</p>
+    </div>
+    <div class="testimonial-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The personal styling session was worth every minute. They helped me build a capsule wardrobe I'll wear for years, not seasons."</p>
+      <p class="testi-author">— Priya M., London</p>
+    </div>
+    <div class="testimonial-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Finally a boutique that understands sustainable doesn't mean boring. Lumière is in a category of its own."</p>
+      <p class="testi-author">— Zara K., Dubai</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h2>Stay <em>Illuminated</em></h2>
+  <p>New arrivals, exclusive offers, and style notes — delivered to your inbox.</p>
+  <div class="email-form">
+    <input type="email" placeholder="Your email address" />
+    <button>Subscribe</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <p class="footer-brand-name">Lumière</p>
+      <p class="footer-brand-desc">A curated boutique for the modern woman who moves with intention, dressed with grace.</p>
+      <div class="footer-socials">
+        <button class="social-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></button>
+        <button class="social-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></button>
+        <button class="social-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></button>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Dresses</a></li>
+        <li><a href="#">Outerwear</a></li>
+        <li><a href="#">Accessories</a></li>
+        <li><a href="#">Sale</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Personal Styling</a></li>
+        <li><a href="#">Gift Cards</a></li>
+        <li><a href="#">Alterations</a></li>
+        <li><a href="#">Returns & Exchanges</a></li>
+        <li><a href="#">Size Guide</a></li>
+      </ul>
+    </div>
+    <div class="footer-col" id="contact">
+      <h4>Visit Us</h4>
+      <ul>
+        <li><a href="#">14 Msasani Peninsula, Dar es Salaam</a></li>
+        <li><a href="#">Mon–Sat: 9am–7pm</a></li>
+        <li><a href="#">Sunday: 11am–5pm</a></li>
+        <li><a href="#">hello@lumiere.co.tz</a></li>
+        <li><a href="#">+255 712 345 678</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Lumière Boutique. All rights reserved.</p>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Settings</a>
+    </div>
+  </div>
+</footer>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <p class="cart-title">Your Edit</p>
+    <button class="close-btn" onclick="closeCart()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty" id="cartEmpty">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <p>Your cart is empty</p>
+      <p style="font-size:12px;">Add a piece to get started</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-subtotal"><span>Subtotal</span><strong id="cartTotal">$0</strong></div>
+    <p class="cart-note">Shipping & duties calculated at checkout · Free over $150</p>
+    <button class="btn-checkout">Proceed to Checkout</button>
+    <button class="btn-continue" onclick="closeCart()">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="booking-modal" id="bookingModal">
+  <div class="booking-card">
+    <div class="booking-top">
+      <button class="close-btn" onclick="closeBooking()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <p class="booking-eyebrow">Complimentary Service</p>
+      <h2>Book a <em>Styling</em><br/>Session</h2>
+      <p>Our stylists are ready to curate the perfect wardrobe for you.</p>
+    </div>
+    <div class="booking-body">
+      <div class="step-indicator">
+        <div class="step-dot done" id="dot1"></div>
+        <div class="step-dot" id="dot2"></div>
+        <div class="step-dot" id="dot3"></div>
+      </div>
+      <div class="booking-step active" id="step1">
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;">Choose your session type</p>
+        <div class="service-cards">
+          <div class="service-card selected" onclick="selectService(this,'In-Store Styling','Complimentary')"><div class="service-icon">🪞</div><div class="service-name">In-Store</div><div class="service-price">Complimentary</div></div>
+          <div class="service-card" onclick="selectService(this,'Virtual Styling','Complimentary')"><div class="service-icon">💻</div><div class="service-name">Virtual</div><div class="service-price">Complimentary</div></div>
+          <div class="service-card" onclick="selectService(this,'Wardrobe Audit','$45')"><div class="service-icon">👗</div><div class="service-name">Wardrobe Audit</div><div class="service-price">$45 / 90 min</div></div>
+          <div class="service-card" onclick="selectService(this,'Personal Shopping','$80')"><div class="service-icon">🛍️</div><div class="service-name">Personal Shopping</div><div class="service-price">$80 / 2 hrs</div></div>
+        </div>
+        <div class="booking-nav"><button class="btn-next" style="flex:1;" onclick="goStep(2)">Choose Date & Time →</button></div>
+      </div>
+      <div class="booking-step" id="step2">
+        <div class="form-row">
+          <div class="form-group"><label>Preferred Date</label><input type="date" id="bookDate" /></div>
+          <div class="form-group"><label>Stylist</label><select id="bookStylist"><option>Any Available</option><option>Amara Osei</option><option>Linh Nguyen</option><option>Sofia Mwangi</option></select></div>
+        </div>
+        <p style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">Available Times</p>
+        <div class="time-slots">
+          <div class="time-slot" onclick="selectTime(this)">9:00 AM</div>
+          <div class="time-slot unavailable">10:00 AM</div>
+          <div class="time-slot" onclick="selectTime(this)">11:00 AM</div>
+          <div class="time-slot" onclick="selectTime(this)">1:00 PM</div>
+          <div class="time-slot unavailable">2:00 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">3:00 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">4:00 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">5:00 PM</div>
+          <div class="time-slot unavailable">6:00 PM</div>
+        </div>
+        <div class="booking-nav"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-next" onclick="goStep(3)">Your Details →</button></div>
+      </div>
+      <div class="booking-step" id="step3">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="Amina" id="bkFirstName" /></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Tariq" id="bkLastName" /></div>
+        </div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com" id="bkEmail" /></div>
+        <div class="form-group"><label>Phone (Optional)</label><input type="tel" placeholder="+255 7XX XXX XXX" /></div>
+        <div class="form-group"><label>Tell us about your style goals</label><textarea placeholder="e.g. Looking for a capsule wardrobe for work travel, love earthy tones..."></textarea></div>
+        <div class="booking-nav"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next" onclick="confirmBooking()">Confirm Booking</button></div>
+      </div>
+      <div class="booking-step" id="step4">
+        <div class="booking-confirm">
+          <div class="confirm-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9C7A5B" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>You're Booked!</h3>
+          <p>A confirmation has been sent to your email. We can't wait to meet you.</p>
+          <div class="confirm-summary" id="confirmSummary"></div>
+          <button class="btn-next" style="width:100%;" onclick="closeBooking()">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  /* ✅ SCROLL REVEAL — fixed: classList.add('visible') matches CSS rule */
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => revealObserver.observe(r));
+
+  /* NEWSLETTER */
+  document.querySelector('.email-form button').addEventListener('click', () => {
+    const inp = document.querySelector('.email-form input');
+    if (inp.value.includes('@')) {
+      inp.value = ''; inp.placeholder = "Thank you! You're now on the list ✓";
+    } else {
+      inp.style.borderColor = '#C4906E'; inp.placeholder = 'Please enter a valid email';
+      setTimeout(() => inp.style.borderColor = '', 1800);
+    }
+  });
+
+  /* OVERLAY */
+  let cartOpen = false, bookingOpen = false;
+  function updateOverlay() {
+    document.getElementById('overlay').classList.toggle('active', cartOpen || bookingOpen);
+  }
+  document.getElementById('overlay').addEventListener('click', () => {
+    if (cartOpen) closeCart();
+    if (bookingOpen) closeBooking();
+  });
+
+  /* MOBILE NAV */
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  }
+  function closeMobileNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+
+  /* CART */
+  const cartData = [
+    { id:1, name:'Camel Wrap Coat',      sub:'Premium Wool Blend', price:285, color:'#E8DFD0' },
+    { id:2, name:'Monochrome Set',        sub:'Silk & Satin',        price:139, color:'#2A2520' },
+    { id:3, name:'Sienna Maxi Dress',     sub:'Linen Collection',    price:168, color:'#F0E8DC' },
+    { id:4, name:'Chestnut Leather Tote', sub:'Full Grain Leather',  price:320, color:'#D5C0A6' },
+  ];
+  let cart = [];
+
+  function addToCart(id) {
+    const product = cartData.find(p => p.id === id);
+    const existing = cart.find(i => i.id === id);
+    if (existing) existing.qty++;
+    else cart.push({ ...product, qty: 1 });
+    updateCartUI();
+    showToast(product.name);
+  }
+
+  function updateCartUI() {
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    const countEl = document.getElementById('cartCount');
+    countEl.textContent = count;
+    countEl.classList.toggle('visible', count > 0);
+    document.getElementById('cartTotal').textContent = '$' + total.toLocaleString();
+    document.getElementById('cartFooter').style.display = cart.length ? '' : 'none';
+    renderCartItems();
+  }
+
+  function renderCartItems() {
+    const container = document.getElementById('cartItems');
+    const empty = document.getElementById('cartEmpty');
+    container.querySelectorAll('.cart-item').forEach(el => el.remove());
+    if (!cart.length) { empty.style.display = 'flex'; return; }
+    empty.style.display = 'none';
+    cart.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'cart-item';
+      div.innerHTML = `
+        <div class="cart-item-thumb" style="background:${item.color};display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 60 80" width="36" xmlns="http://www.w3.org/2000/svg" opacity="0.5">
+            <ellipse cx="30" cy="16" rx="10" ry="11" fill="#C8A882"/>
+            <path d="M20 26 Q14 34 12 50 L10 78 L50 78 L48 50 Q46 34 40 26 Z" fill="white" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="cart-item-info">
+          <p class="cart-item-name">${item.name}</p>
+          <p class="cart-item-sub">${item.sub}</p>
+          <div class="cart-item-row">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+            </div>
+            <span class="cart-item-price">$${(item.price * item.qty).toLocaleString()}</span>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
+        </div>`;
+      container.appendChild(div);
+    });
+  }
+
+  function changeQty(id, delta) {
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+    item.qty = Math.max(0, item.qty + delta);
+    if (item.qty === 0) cart = cart.filter(i => i.id !== id);
+    updateCartUI();
+  }
+  function removeItem(id) { cart = cart.filter(i => i.id !== id); updateCartUI(); }
+  function openCart() { cartOpen = true; document.getElementById('cartDrawer').classList.add('open'); updateOverlay(); }
+  function closeCart() { cartOpen = false; document.getElementById('cartDrawer').classList.remove('open'); updateOverlay(); }
+
+  /* TOAST */
+  function showToast(name) {
+    const t = document.getElementById('toast');
+    t.textContent = `"${name}" added to your edit ✓`;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  /* ADD TO CART BUTTONS */
+  document.querySelectorAll('.product-card').forEach((card, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn-primary';
+    btn.style.cssText = 'width:100%;margin-top:12px;padding:11px;font-size:11px;';
+    btn.textContent = 'Add to Cart';
+    btn.onclick = () => addToCart(i + 1);
+    card.appendChild(btn);
+  });
+
+  /* BOOKING */
+  let selectedService = 'In-Store Styling', selectedServicePrice = 'Complimentary';
+  let selectedTime = '', currentStep = 1;
+
+  function selectService(el, name, price) {
+    document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedService = name; selectedServicePrice = price;
+  }
+  function selectTime(el) {
+    document.querySelectorAll('.time-slot:not(.unavailable)').forEach(t => t.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedTime = el.textContent.trim();
+  }
+  function goStep(n) {
+    if (currentStep === 2 && n === 3) {
+      if (!document.getElementById('bookDate').value) { alert('Please select a date.'); return; }
+    }
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep = n;
+    document.getElementById('step' + n).classList.add('active');
+    ['dot1','dot2','dot3'].forEach((id, i) => document.getElementById(id).classList.toggle('done', i < n));
+  }
+  function confirmBooking() {
+    const first = document.getElementById('bkFirstName').value.trim();
+    const email = document.getElementById('bkEmail').value.trim();
+    if (!first) { document.getElementById('bkFirstName').focus(); alert('Please enter your first name.'); return; }
+    if (!email || !email.includes('@')) { document.getElementById('bkEmail').focus(); alert('Please enter a valid email address.'); return; }
+    const last = document.getElementById('bkLastName').value.trim();
+    const date = document.getElementById('bookDate').value || 'TBD';
+    const stylist = document.getElementById('bookStylist').value;
+    document.getElementById('confirmSummary').innerHTML = `
+      <div class="confirm-row"><span>Service</span><span>${selectedService}</span></div>
+      <div class="confirm-row"><span>Price</span><span>${selectedServicePrice}</span></div>
+      <div class="confirm-row"><span>Date</span><span>${date}</span></div>
+      <div class="confirm-row"><span>Time</span><span>${selectedTime || 'TBD'}</span></div>
+      <div class="confirm-row"><span>Stylist</span><span>${stylist}</span></div>
+      <div class="confirm-row"><span>Name</span><span>${first} ${last}</span></div>
+      <div class="confirm-row"><span>Email</span><span>${email}</span></div>`;
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep = 4;
+    document.getElementById('step4').classList.add('active');
+    ['dot1','dot2','dot3'].forEach(id => document.getElementById(id).classList.add('done'));
+  }
+  function openBooking() {
+    if (currentStep !== 1) {
+      document.getElementById('step' + currentStep).classList.remove('active');
+      currentStep = 1;
+      document.getElementById('step1').classList.add('active');
+      ['dot1','dot2','dot3'].forEach((id, i) => document.getElementById(id).classList.toggle('done', i < 1));
+      selectedService = 'In-Store Styling'; selectedServicePrice = 'Complimentary'; selectedTime = '';
+      document.querySelectorAll('.service-card').forEach((c, i) => c.classList.toggle('selected', i === 0));
+      document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
+      ['bkFirstName','bkLastName','bkEmail'].forEach(id => document.getElementById(id).value = '');
+    }
+    bookingOpen = true;
+    document.getElementById('bookingModal').classList.add('open');
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('bookDate').min = today;
+    document.getElementById('bookDate').value = today;
+    updateOverlay();
+  }
+  function closeBooking() { bookingOpen = false; document.getElementById('bookingModal').classList.remove('open'); updateOverlay(); }
+</script>
+</body>
+</html>
